@@ -9,7 +9,7 @@
 
 ```bash
 # Using npm
-npm install tailwindcss
+npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
 
 # Using Yarn
 yarn add tailwindcss
@@ -50,14 +50,14 @@ yarn add laravel-mix --dev
 ## 6. Publish the Laravel Mix config file
 
 ```bash
-cp node_modules/laravel-mix/setup/webpack.mix.js ./
+touch webpack.mix.js
 ```
 
-## 7. Update the default Laravel Mix config for Tailwind
+## 7. Update the default Laravel Mix file for Tailwind
 
 ```js
-const mix = require('laravel-mix');
-const tailwindcss = require('tailwindcss')
+let mix = require('laravel-mix');
+let tailwindcss = require('tailwindcss')
 
 mix.sass('sass/style.scss', 'style.css')
   .options({
@@ -83,11 +83,12 @@ yarn add cross-env --dev
 ```json
 "scripts": {
     "dev": "npm run development",
-    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "mix-watch": "npm run development -- --watch",
-    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "development": "mix",
+    "mix-watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000",
+    "hot": "mix watch --hot",
     "prod": "npm run production",
-    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "production": "mix --production",    
 }
 ```
 
